@@ -66,6 +66,34 @@ contacts no third party.",
   ]);
 }
 
+/**
+ * The Testnet deployment.
+ *
+ * This section states the fact and links to the engine's own record rather than printing
+ * contract ids here. The ids are in the engine's page, this viewer renders that page, and
+ * a second copy of an address in this repository would be a value this layer has to keep
+ * in step with a chain it cannot read - which is the one thing the presentation layer is
+ * not allowed to do. A caption that can drift is worse than a link that cannot.
+ */
+function deployment(): HTMLElement {
+  return element("section", {}, [
+    withText("h2", "It is deployed, and the deployment is observed"),
+    element("p", {}, [
+      "Both halves of the reference contract are on Testnet, and both deployed modules hash \
+to the fixtures committed in the engine. The engine analyses its own deployment there \
+rather than a borrowed one: asked of the callee, it reads the callee's own event and \
+names the caller that entered it.",
+    ]),
+    element("p", {}, [
+      "The contract ids, the transactions, the reproduced digests and the exact commands \
+are recorded in ",
+      link("the engine's testnet page", "#/docs/testnet"),
+      ", which this browser renders from the engine's Markdown. The resource cost of each \
+entrypoint is measured and documented beside it.",
+    ]),
+  ]);
+}
+
 /** Renders the overview. */
 export async function renderOverview(container: HTMLElement): Promise<void> {
   const manifest = await loadManifest();
@@ -108,6 +136,8 @@ rather than a caption.",
     ),
 
     pitch(),
+
+    deployment(),
 
     withText("h2", "What the engine does not claim"),
     element("p", {}, [

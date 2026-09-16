@@ -27,7 +27,7 @@ const ENGINE_URL = "https://github.com/Amasario-Soroban-Click/amasario-provenanc
  * panel is evidence and which is a production.
  */
 const PITCH = {
-  video: "./pitch/amasario-pitch-v1.mp4",
+  video: "./pitch/amasario-pitch-v2.mp4",
   poster: "./pitch/amasario-pitch-thumbnail.png",
   title: "The five-minute walkthrough",
 };

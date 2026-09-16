@@ -3,17 +3,17 @@
 [![CI](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/ci.yml)
 [![Deploy](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/deploy.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Walkthrough](https://img.shields.io/badge/%E2%96%B6_watch-the_5--minute_walkthrough-58a6ff)](https://amasario-explorer.vercel.app/pitch/amasario-pitch-v1.mp4)
+[![Walkthrough](https://img.shields.io/badge/%E2%96%B6_watch-the_5--minute_walkthrough-58a6ff)](https://amasario-explorer.vercel.app/pitch/amasario-pitch-v2.mp4)
 
 **A browser over the [Amasario provenance engine](https://github.com/Amasario-Soroban-Click/amasario-provenance-engine)'s own documents.**
 
-[![Press play: the five-minute walkthrough](public/pitch/amasario-pitch-thumbnail.png)](https://amasario-explorer.vercel.app/pitch/amasario-pitch-v1.mp4)
+[![Press play: the five-minute walkthrough](public/pitch/amasario-pitch-thumbnail.png)](https://amasario-explorer.vercel.app/pitch/amasario-pitch-v2.mp4)
 
 The recording is a production about the project — what the engine observes, what it
-refuses to claim, and the four layers it is built from. It is not one of the documents this
-browser renders, and the section on the homepage says so too, because a page whose whole
-claim is that nothing is invented should not leave a reader to guess which panel is
-evidence and which is a recording.
+refuses to claim, the four layers it is built from, and the Testnet deployment of the
+reference contract. It is not one of the documents this browser renders, and the section on
+the homepage says so too, because a page whose whole claim is that nothing is invented
+should not leave a reader to guess which panel is evidence and which is a recording.
 
 This repository is the **presentation layer** of Amasario. It performs no analysis, holds
 no keys, contacts no network, and computes nothing about any contract. It reads documents
@@ -25,7 +25,7 @@ the engine already produced and draws them.
 | --- | --- |
 | **Graphs** | Five committed `amasario graph` documents, drawn with a deterministic layout and listed underneath with each relationship's confidence, observation status, basis and evidence count. |
 | **Snapshots** | One contract captured at two boundaries, and the relationships that differ — with the module digests beside them, because a changed graph over an unchanged module is a different claim from a changed contract. |
-| **Reference contract** | The two Soroban contracts this project builds from source, their recorded digests and toolchains, and the cross-contract call they were constructed to produce. |
+| **Reference contract** | The two Soroban contracts this project builds from source, their recorded digests and toolchains, and the cross-contract call they were constructed to produce — both halves deployed to Testnet. |
 | **Documentation** | The engine's own pages, rendered from their Markdown sources, with links that leave the browser pointing at the engine repository. |
 
 ## Where the data comes from
@@ -52,8 +52,17 @@ node scripts/vendor.mjs /path/to/amasario-provenance-engine
 Five minutes, narrated, hosted by this deployment rather than by a third party — pressing
 play contacts no host outside the project, which is the same rule the rest of the site
 follows. The poster is `public/pitch/amasario-pitch-thumbnail.png` and the file is
-`public/pitch/amasario-pitch-v1.mp4`; both ship in the build, and `vercel.json` serves them
+`public/pitch/amasario-pitch-v2.mp4`; both ship in the build, and `vercel.json` serves them
 immutable because the filename carries a version.
+
+The version number is the point. `v2` is a re-render of `v1` rather than an edit to it,
+because shot durations are derived from the narration — so changing a line of the script
+re-cuts the whole film. What `v2` adds is a shot of the deployed reference contract being
+observed on Testnet: the engine reading the callee's own event to name the caller that
+entered it, and then declining to answer the same question asked of the caller, because
+that direction left no trace to read. Both deployed modules hash to the fixtures committed
+in the engine, and the difference between `v1` and `v2` is recorded in the engine's
+`docs/pitch-video.md`.
 
 The video is a recording of the project and not a source of truth about it. Where the two
 disagree, the documents under `public/data/`, the checks in `ci.yml` and this README are

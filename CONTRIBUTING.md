@@ -23,7 +23,7 @@ node scripts/verify-manifest.mjs
 ```
 
 The last one is the important one: it re-hashes every vendored document against
-`docs/manifest.json`. If it fails, either a vendored file was edited by hand — which is
+`public/data/manifest.json`. If it fails, either a vendored file was edited by hand — which is
 always wrong, because these files are evidence — or the manifest is out of date.
 
 ## Re-vendoring

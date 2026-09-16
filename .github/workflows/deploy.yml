@@ -1,0 +1,96 @@
+name: Deploy
+
+# Production deployment, driven from this workflow rather than by Vercel's Git
+# integration.
+#
+# That is a deliberate choice and it has a cost worth stating. Vercel can deploy on push by
+# itself, but only once the Vercel GitHub App has been installed on the repository, which
+# is an account-level action no workflow can perform. Driving the CLI from here needs three
+# repository secrets and nothing else, keeps the build in the same place as the checks that
+# gate it, and means a deployment cannot happen on a commit whose CI is red - because this
+# job runs the same commands CI does before it publishes anything.
+#
+# The secrets are `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`. None of them is
+# committed; `vercel pull` fetches the project's settings with them and writes them to a
+# gitignored `.vercel/` directory.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # One production deployment at a time, and a newer push supersedes an older one rather
+  # than queueing behind it: the later commit is the one anybody wanted deployed.
+  group: deploy-production-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  production:
+    name: production
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://amasario-explorer.vercel.app
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The same gate CI applies, repeated here rather than assumed. A deployment job that
+      # trusted a separate workflow's green tick would publish whatever the commit says
+      # when that workflow was skipped, and the manifest check in particular is the one
+      # thing standing between an edited fixture and a page that shows it.
+      - name: Typecheck, test and verify the vendored documents
+        run: |
+          npm run typecheck
+          npm test
+          npm run verify:manifest
+
+      - name: Install the Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull the project settings
+        run: vercel pull --yes --environment=production --token="${{ secrets.VERCEL_TOKEN }}"
+
+      - name: Build for Vercel
+        run: vercel build --prod --token="${{ secrets.VERCEL_TOKEN }}"
+
+      - name: Deploy to production
+        id: deploy
+        run: |
+          set -euo pipefail
+          url="$(vercel deploy --prebuilt --prod --token="${{ secrets.VERCEL_TOKEN }}")"
+          echo "url=${url}" >> "${GITHUB_OUTPUT}"
+          echo "deployed ${url}"
+
+      # The deployment is only useful if it answers, so it is fetched once before the job
+      # reports success. A deploy step that exits zero on an upload and never requests the
+      # page is a step that cannot tell a working site from a static 404.
+      - name: The deployment answers
+        run: |
+          set -euo pipefail
+          url="${{ steps.deploy.outputs.url }}"
+          status="$(curl -s -o /tmp/index.html -w '%{http_code}' "${url}")"
+          if [ "${status}" != "200" ]; then
+            echo "::error title=Deployment did not answer::${url} returned HTTP ${status}"
+            exit 1
+          fi
+          if ! grep -q "Amasario" /tmp/index.html; then
+            echo "::error title=Deployment served the wrong page::${url} answered 200 but the \
+          body does not mention the product"
+            exit 1
+          fi
+          echo "${url} answered 200 with the expected page"

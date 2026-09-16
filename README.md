@@ -1,6 +1,7 @@
 # AMASARIO — Explorer
 
 [![CI](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/ci.yml)
+[![Deploy](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Amasario-Soroban-Click/amasario-explorer/actions/workflows/deploy.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 **A browser over the [Amasario provenance engine](https://github.com/Amasario-Soroban-Click/amasario-provenance-engine)'s own documents.**
@@ -73,9 +74,18 @@ graph incomparable — which is why there is no force simulation anywhere in the
 
 ## Deployment
 
-Deployed to Vercel as a static site. `vercel.json` sets the build command, the output
-directory and the response headers; there is no server, no function and no environment
-variable, because there is nothing a server would add to a site that reads committed files.
+**Live at [amasario-explorer.vercel.app](https://amasario-explorer.vercel.app).**
+
+A static site on Vercel. `vercel.json` sets the build command, the output directory and the
+response headers; there is no server, no function and no environment variable, because
+there is nothing a server would add to a site that reads committed files.
+
+`.github/workflows/deploy.yml` deploys on every push to `main`. It runs the same
+`typecheck`, `test` and manifest verification that `ci.yml` runs before it publishes
+anything, so a commit whose data does not match the manifest cannot reach production - and
+after deploying it fetches the deployment once and requires a 200 with the expected page,
+because a deploy step that uploads and never requests the result cannot tell a working site
+from a static 404.
 
 ## Licence
 

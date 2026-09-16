@@ -1,6 +1,6 @@
 {
   "source": "Amasario-Soroban-Click/amasario-provenance-engine",
-  "sourceCommit": "e481b666b5e0c01a0b2720f1c770e4f45368d831",
+  "sourceCommit": "1f9828d7952dfa924f3c2f0a0e3443a581d2cb48",
   "note": "Every file under public/data and public/docs is a byte-for-byte copy of a file in the engine at sourceCommit. Checked by scripts/verify-manifest.mjs on every CI run.",
   "graphs": [
     "cyclic.json",
@@ -31,6 +31,7 @@
     "output-formats.md",
     "pitch-video.md",
     "provenance.md",
+    "resource-costs.md",
     "security.md",
     "snapshots.md",
     "testnet.md",
@@ -60,6 +61,7 @@
     "docs/output-formats.md": "a07d20c9a369b6f025360092576f45d816f9f0d8d0c8f54e8f0bc7ae0a01ccdc",
     "docs/pitch-video.md": "15ee0ac5c628a809fe22165b88de9e4f26fbd14db5fea32fc05ebb276a35e0a2",
     "docs/provenance.md": "70c581d59e9f2df7322588083689f3b37468b79efe4b95f89505ce0e102de6c4",
+    "docs/resource-costs.md": "cb7c9860549afe6fcee3cc64ce0fc1c3003a1aa6bb31f5e4e96b2d82ec4ea7ca",
     "docs/security.md": "066940efa78440fb8c5f11ee0d273d379b06fa0945d4e15cd30a1c1164e91dfa",
     "docs/snapshots.md": "67ea5af8edc1e6681e4255883f4cab4fcc6725575547c3babeb57e318b1fe27f",
     "docs/testnet.md": "e6990e6939f6e0d2161b835862c0a06bf989f50b8195ec8bdefeafc3e60856d5",

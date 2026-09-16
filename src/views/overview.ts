@@ -13,6 +13,59 @@ import { element, replace, withText } from "../ui.js";
 
 const ENGINE_URL = "https://github.com/Amasario-Soroban-Click/amasario-provenance-engine";
 
+/**
+ * The pitch video.
+ *
+ * Served from this deployment rather than embedded from a third party, so the page makes
+ * no request to a host outside the project until a reader chooses to press play - which is
+ * the same rule every other asset here follows.
+ *
+ * The poster is a link and not a player. A viewer that autoplayed a video would be the one
+ * thing on this site that acted before it was asked to, and the caption states plainly
+ * that this is a recording rather than one of the engine's documents, because a page whose
+ * whole claim is that nothing here is invented should not leave a reader to guess which
+ * panel is evidence and which is a production.
+ */
+const PITCH = {
+  video: "./pitch/amasario-pitch-v1.mp4",
+  poster: "./pitch/amasario-pitch-thumbnail.png",
+  title: "The five-minute walkthrough",
+};
+
+function pitch(): HTMLElement {
+  const anchor = element(
+    "a",
+    { class: "pitch", href: PITCH.video, target: "_blank", rel: "noreferrer" },
+    [
+      element("img", {
+        src: PITCH.poster,
+        alt:
+          "The walkthrough's opening frame, showing the engine's verification statuses " +
+          "rendered in this browser",
+        width: 1280,
+        height: 720,
+        loading: "lazy",
+      }),
+      withText("span", "Play the five-minute walkthrough", { class: "pitch-play" }),
+    ],
+  );
+
+  return element("section", {}, [
+    withText("h2", PITCH.title),
+    element("p", {}, [
+      "A recording of this project end to end: what the engine observes, what it refuses \
+to claim, the four layers it is built from, and the deployment this page is. It is a \
+production about the project rather than one of its documents, and it is said here so that \
+nothing below is mistaken for it.",
+    ]),
+    anchor,
+    element("p", { class: "footnote" }, [
+      "Five minutes, narrated. The file is served from this deployment, so pressing play \
+contacts no third party.",
+    ]),
+  ]);
+}
+
 /** Renders the overview. */
 export async function renderOverview(container: HTMLElement): Promise<void> {
   const manifest = await loadManifest();
@@ -53,6 +106,8 @@ rather than a caption.",
         withText("dd", label),
       ]),
     ),
+
+    pitch(),
 
     withText("h2", "What the engine does not claim"),
     element("p", {}, [

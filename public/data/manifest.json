@@ -1,6 +1,6 @@
 {
   "source": "Amasario-Soroban-Click/amasario-provenance-engine",
-  "sourceCommit": "da4f158789777f16b3e3971574911bbc92e95890",
+  "sourceCommit": "99e184dcaff62d6df91417ef16f4938d33e3c4ea",
   "note": "Every file under public/data and public/docs is a byte-for-byte copy of a file in the engine at sourceCommit. Checked by scripts/verify-manifest.mjs on every CI run.",
   "graphs": [
     "cyclic.json",
@@ -47,7 +47,7 @@
     "data/snapshots/testnet-alpha-before.json": "ce782b3e0483c8435b4d7cf4099acb21086e351402b38cb786bf9050ed6f4c2b",
     "data/reference/reference-callee.json": "07fe607bb990a8a0ca837786b456df170432fc5558bf49688a22121252fb4775",
     "data/reference/reference-caller.json": "7328c61b949b29326708ff3ab777e8ff894430c946b022cfd7893a2caa141a32",
-    "docs/architecture.md": "92afd4f5a190e3c02344e6a00e1216dc4515969d8147c73f5bb9044dcc0dfed1",
+    "docs/architecture.md": "7cf51afcc9ed9f9c90085c47ea594177989a2f1ba9d2e04e35212b58fb16663a",
     "docs/ci-integration.md": "3f2dd0a4ff55ea39e93a2003e41c699edbfbd60602d1604fb37bbed42c1edb0a",
     "docs/cli.md": "68ea2c243a6b6bc40156a3b7b61a3fb5e6754431bcbfe4d9369ab256ce0bdd6f",
     "docs/contract-discovery.md": "17d3d8e57577d02bb63b85d103a5a35de5a8d1da19972b203852aea91c3b9c3d",
@@ -58,7 +58,7 @@
     "docs/graph-analysis.md": "8e0ef81b82050a6e83f3e78071b2d3841f43572466b8c0138ac142cc681407fa",
     "docs/impact-analysis.md": "bf7be6f8f7ae2b7f26a7b8aa7fdaebbfa42367aa5742b0b74f8dd23eff7ebfc7",
     "docs/output-formats.md": "a07d20c9a369b6f025360092576f45d816f9f0d8d0c8f54e8f0bc7ae0a01ccdc",
-    "docs/pitch-video.md": "8725f606da9a99e0418fb2d0c0376c6a57aa658ad814da0c287dee667628dd57",
+    "docs/pitch-video.md": "b8e3c322b4cedb32127dca26b16dc3660ce83f1a008c9b68e6c2ab7f23cf96cd",
     "docs/provenance.md": "70c581d59e9f2df7322588083689f3b37468b79efe4b95f89505ce0e102de6c4",
     "docs/security.md": "066940efa78440fb8c5f11ee0d273d379b06fa0945d4e15cd30a1c1164e91dfa",
     "docs/snapshots.md": "67ea5af8edc1e6681e4255883f4cab4fcc6725575547c3babeb57e318b1fe27f",

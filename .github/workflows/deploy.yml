@@ -80,27 +80,44 @@ jobs:
       # success. A deploy step that exits zero on an upload and never requests the result is
       # a step that cannot tell a working site from a static 404.
       #
-      # Two URLs are checked, and redirects are followed. The second is the one anybody
-      # links to; the first is what this run produced, and it needs `-L` because Vercel
-      # answers a deployment-specific hostname with a 302 to the production alias - which
-      # is what this check's first version tripped over, reporting a working deployment as
-      # a failure on a 302 it had asked for.
-      - name: The deployment answers
+      # The alias is checked, not `${{ steps.deploy.outputs.url }}`. That URL is behind
+      # Vercel's deployment protection and answers a 302 into an SSO flow - which is correct
+      # and deliberate, since a deployment nobody has promoted is not meant to be publicly
+      # reachable. An earlier version of this step fetched it anyway and reported a working
+      # deployment as a failure, twice, for two different reasons: first a 302 because
+      # redirects were not followed, then a 404 at the end of the login redirect it was
+      # following into. A check whose subject is unreachable by design cannot fail for a
+      # reason that means anything.
+      #
+      # The alias is what the README, the badge and the repository homepage point at, so it
+      # is the address that has to work.
+      - name: The production alias answers
         env:
           PRODUCTION_URL: https://amasario-explorer.vercel.app
         run: |
           set -euo pipefail
-          for url in "${{ steps.deploy.outputs.url }}" "${PRODUCTION_URL}"; do
-            status="$(curl -sL -o /tmp/index.html -w '%{http_code}' "${url}")"
-            if [ "${status}" != "200" ]; then
-              echo "::error title=Deployment did not answer::${url} returned HTTP ${status} after \
-          following redirects"
-              exit 1
+          status=""
+          # The alias can lag the deployment by a moment while Vercel promotes it, so this
+          # is a bounded wait rather than a single request. Six attempts over a minute is
+          # long enough for a promotion and short enough to fail a genuinely broken deploy.
+          for attempt in 1 2 3 4 5 6; do
+            status="$(curl -s -o /tmp/index.html -w '%{http_code}' "${PRODUCTION_URL}/")"
+            if [ "${status}" = "200" ]; then
+              echo "attempt ${attempt}: ${PRODUCTION_URL} answered 200"
+              break
             fi
-            if ! grep -q "Amasario" /tmp/index.html; then
-              echo "::error title=Deployment served the wrong page::${url} answered 200 but the \
-          body does not mention the product"
-              exit 1
-            fi
-            echo "${url} answered 200 with the expected page"
+            echo "attempt ${attempt}: ${PRODUCTION_URL} returned HTTP ${status}; waiting"
+            sleep 10
           done
+
+          if [ "${status}" != "200" ]; then
+            echo "::error title=The production alias did not answer::${PRODUCTION_URL} returned \
+          HTTP ${status} after six attempts over a minute"
+            exit 1
+          fi
+          if ! grep -q "Amasario" /tmp/index.html; then
+            echo "::error title=The alias served the wrong page::${PRODUCTION_URL} answered 200 \
+          but the body does not mention the product"
+            exit 1
+          fi
+          echo "::notice title=Deployed::${PRODUCTION_URL} is serving this commit"

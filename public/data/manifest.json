@@ -1,6 +1,6 @@
 {
   "source": "Amasario-Soroban-Click/amasario-provenance-engine",
-  "sourceCommit": "99e184dcaff62d6df91417ef16f4938d33e3c4ea",
+  "sourceCommit": "e481b666b5e0c01a0b2720f1c770e4f45368d831",
   "note": "Every file under public/data and public/docs is a byte-for-byte copy of a file in the engine at sourceCommit. Checked by scripts/verify-manifest.mjs on every CI run.",
   "graphs": [
     "cyclic.json",
@@ -58,7 +58,7 @@
     "docs/graph-analysis.md": "8e0ef81b82050a6e83f3e78071b2d3841f43572466b8c0138ac142cc681407fa",
     "docs/impact-analysis.md": "bf7be6f8f7ae2b7f26a7b8aa7fdaebbfa42367aa5742b0b74f8dd23eff7ebfc7",
     "docs/output-formats.md": "a07d20c9a369b6f025360092576f45d816f9f0d8d0c8f54e8f0bc7ae0a01ccdc",
-    "docs/pitch-video.md": "b8e3c322b4cedb32127dca26b16dc3660ce83f1a008c9b68e6c2ab7f23cf96cd",
+    "docs/pitch-video.md": "15ee0ac5c628a809fe22165b88de9e4f26fbd14db5fea32fc05ebb276a35e0a2",
     "docs/provenance.md": "70c581d59e9f2df7322588083689f3b37468b79efe4b95f89505ce0e102de6c4",
     "docs/security.md": "066940efa78440fb8c5f11ee0d273d379b06fa0945d4e15cd30a1c1164e91dfa",
     "docs/snapshots.md": "67ea5af8edc1e6681e4255883f4cab4fcc6725575547c3babeb57e318b1fe27f",

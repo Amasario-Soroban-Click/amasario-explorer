@@ -76,21 +76,31 @@ jobs:
           echo "url=${url}" >> "${GITHUB_OUTPUT}"
           echo "deployed ${url}"
 
-      # The deployment is only useful if it answers, so it is fetched once before the job
-      # reports success. A deploy step that exits zero on an upload and never requests the
-      # page is a step that cannot tell a working site from a static 404.
+      # The deployment is only useful if it answers, so it is fetched before the job reports
+      # success. A deploy step that exits zero on an upload and never requests the result is
+      # a step that cannot tell a working site from a static 404.
+      #
+      # Two URLs are checked, and redirects are followed. The second is the one anybody
+      # links to; the first is what this run produced, and it needs `-L` because Vercel
+      # answers a deployment-specific hostname with a 302 to the production alias - which
+      # is what this check's first version tripped over, reporting a working deployment as
+      # a failure on a 302 it had asked for.
       - name: The deployment answers
+        env:
+          PRODUCTION_URL: https://amasario-explorer.vercel.app
         run: |
           set -euo pipefail
-          url="${{ steps.deploy.outputs.url }}"
-          status="$(curl -s -o /tmp/index.html -w '%{http_code}' "${url}")"
-          if [ "${status}" != "200" ]; then
-            echo "::error title=Deployment did not answer::${url} returned HTTP ${status}"
-            exit 1
-          fi
-          if ! grep -q "Amasario" /tmp/index.html; then
-            echo "::error title=Deployment served the wrong page::${url} answered 200 but the \
+          for url in "${{ steps.deploy.outputs.url }}" "${PRODUCTION_URL}"; do
+            status="$(curl -sL -o /tmp/index.html -w '%{http_code}' "${url}")"
+            if [ "${status}" != "200" ]; then
+              echo "::error title=Deployment did not answer::${url} returned HTTP ${status} after \
+          following redirects"
+              exit 1
+            fi
+            if ! grep -q "Amasario" /tmp/index.html; then
+              echo "::error title=Deployment served the wrong page::${url} answered 200 but the \
           body does not mention the product"
-            exit 1
-          fi
-          echo "${url} answered 200 with the expected page"
+              exit 1
+            fi
+            echo "${url} answered 200 with the expected page"
+          done

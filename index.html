@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Amasario Explorer</title>
+    <meta
+      name="description"
+      content="A browser over the Amasario provenance engine's own documents: dependency graphs, snapshot diffs, verification scope and the reference contract's recorded modules."
+    />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <!--
+      One element to start from, and everything else is created by `src/main.ts`. The app
+      has no server and no API: every document it shows is a file committed under
+      `public/data/`, which is the point rather than a simplification.
+    -->
+    <div id="app">
+      <noscript>
+        <p>
+          The explorer renders the engine's committed documents in the browser, so it
+          needs JavaScript. The documents themselves are plain JSON under
+          <code>public/data/</code> and read fine without it.
+        </p>
+      </noscript>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

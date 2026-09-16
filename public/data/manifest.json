@@ -1,0 +1,67 @@
+{
+  "source": "Amasario-Soroban-Click/amasario-provenance-engine",
+  "sourceCommit": "7e10579844446849666689e557fecac0b6302360",
+  "note": "Every file under public/data and public/docs is a byte-for-byte copy of a file in the engine at sourceCommit. Checked by scripts/verify-manifest.mjs on every CI run.",
+  "graphs": [
+    "cyclic.json",
+    "direct.json",
+    "disconnected.json",
+    "multi-hop.json",
+    "transitive.json"
+  ],
+  "snapshots": [
+    "testnet-alpha-after.json",
+    "testnet-alpha-before.json"
+  ],
+  "reference": [
+    "reference-callee.json",
+    "reference-caller.json"
+  ],
+  "docs": [
+    "architecture.md",
+    "ci-integration.md",
+    "cli.md",
+    "contract-discovery.md",
+    "data-flow.md",
+    "dependency-analysis.md",
+    "evidence.md",
+    "fuzzing.md",
+    "graph-analysis.md",
+    "impact-analysis.md",
+    "output-formats.md",
+    "provenance.md",
+    "security.md",
+    "snapshots.md",
+    "testnet.md",
+    "troubleshooting.md",
+    "verification.md"
+  ],
+  "digests": {
+    "data/graphs/cyclic.json": "38be1d989193ae28cb9bdffb832263f41396f565db2a0068fb4a8dda6e52111c",
+    "data/graphs/direct.json": "9388d83df21e63bc81d5cde56fa5f2f6d5119a1fea024b9c975681ba78178959",
+    "data/graphs/disconnected.json": "9c6907882f9a910f70a13106b9c1e58419f00341f4e8e07cb2fd982c0b8df635",
+    "data/graphs/multi-hop.json": "60187b54f06d2a68f85de524ee679a110f5491066d0a0f06fbab61189eedefe9",
+    "data/graphs/transitive.json": "5f36e4ab5837f69ad8907eec9c0a591dd633ad4da04dd98f608918344f321322",
+    "data/snapshots/testnet-alpha-after.json": "fea3fe72cbe598e82406e125415838e700c8004dbf27ba4e4c30307655b7bb5e",
+    "data/snapshots/testnet-alpha-before.json": "ce782b3e0483c8435b4d7cf4099acb21086e351402b38cb786bf9050ed6f4c2b",
+    "data/reference/reference-callee.json": "07fe607bb990a8a0ca837786b456df170432fc5558bf49688a22121252fb4775",
+    "data/reference/reference-caller.json": "7328c61b949b29326708ff3ab777e8ff894430c946b022cfd7893a2caa141a32",
+    "docs/architecture.md": "216ad9e21a5c2b1030b99d23dfa41e511f5bafb1e4f439986fe0297424b2f904",
+    "docs/ci-integration.md": "0de62782c78d7eb1ee793f4d618b0878f48d17c3fcd0ecea4fcd68311293cc19",
+    "docs/cli.md": "68ea2c243a6b6bc40156a3b7b61a3fb5e6754431bcbfe4d9369ab256ce0bdd6f",
+    "docs/contract-discovery.md": "17d3d8e57577d02bb63b85d103a5a35de5a8d1da19972b203852aea91c3b9c3d",
+    "docs/data-flow.md": "cde5523b7cba45599d1a7f78836bd1468b38482f96db6b5c4c13f31ca548ad86",
+    "docs/dependency-analysis.md": "5196ddc0fe1069b8c9db7bf3e686a820ac6ad7601ed46b64a88d10d22a6152f8",
+    "docs/evidence.md": "4c24468bfd49e0d1197bbc498ae3496d8763c3a6db03213cacaabb08168c36f7",
+    "docs/fuzzing.md": "a85898bf435404d59f4d29ccee9a4ece669af137b5c640255de669b6e113bb17",
+    "docs/graph-analysis.md": "8e0ef81b82050a6e83f3e78071b2d3841f43572466b8c0138ac142cc681407fa",
+    "docs/impact-analysis.md": "bf7be6f8f7ae2b7f26a7b8aa7fdaebbfa42367aa5742b0b74f8dd23eff7ebfc7",
+    "docs/output-formats.md": "a07d20c9a369b6f025360092576f45d816f9f0d8d0c8f54e8f0bc7ae0a01ccdc",
+    "docs/provenance.md": "70c581d59e9f2df7322588083689f3b37468b79efe4b95f89505ce0e102de6c4",
+    "docs/security.md": "066940efa78440fb8c5f11ee0d273d379b06fa0945d4e15cd30a1c1164e91dfa",
+    "docs/snapshots.md": "67ea5af8edc1e6681e4255883f4cab4fcc6725575547c3babeb57e318b1fe27f",
+    "docs/testnet.md": "464b414e9de44fcc97efd603330dc946e57569bb04e0c125bb0134a225733f0b",
+    "docs/troubleshooting.md": "c65e7a4370608ba3fe05cbccb159b08dd1c1c16d627931b90cb419089d9d5f05",
+    "docs/verification.md": "fc26cbd0bde391bed7b1222ec3b6f40b00fa53e9f202842b13ca233c75aa7835"
+  }
+}

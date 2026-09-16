@@ -1,0 +1,69 @@
+name: CI
+
+# Every check here runs on a pull request as well as on `main`, because the one thing this
+# repository has that can be wrong silently is the pair of claims on its front page: that
+# every document it shows is a byte-for-byte copy of one the engine produced, and that the
+# same input produces the same picture. Both are assertions about files, so both are
+# checked here rather than reviewed.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # No colour escapes in a log a reader may be diffing.
+  NO_COLOR: "1"
+  FORCE_COLOR: "0"
+
+jobs:
+  build:
+    name: typecheck, test and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      # `npm ci` rather than `npm install`: it installs exactly the lock file and fails
+      # when the lock file and the manifest disagree, which is the difference between a CI
+      # job that reproduces a contributor's install and one that quietly resolves a
+      # different tree.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      # Before the build, because a build would succeed with the wrong data in place: the
+      # site has no compile-time knowledge of what the JSON says, so nothing but this step
+      # can tell that a vendored document was edited or dropped.
+      - name: The vendored documents match the manifest
+        run: npm run verify:manifest
+
+      - name: Build
+        run: npm run build
+
+      # The build output is uploaded rather than asserted to exist, so a reviewer can open
+      # the site the job produced instead of rebuilding it locally to find out what it
+      # looks like.
+      - name: Upload the built site
+        uses: actions/upload-artifact@v4
+        with:
+          name: explorer-dist
+          path: dist
+          if-no-files-found: error
+          retention-days: 7

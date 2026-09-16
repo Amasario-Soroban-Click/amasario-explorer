@@ -1,0 +1,30 @@
+{
+  "name": "amasario-explorer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A browser over the Amasario provenance engine's own documents: dependency graphs, snapshot diffs, verification scope and the reference contract's recorded modules.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "verify:manifest": "node scripts/verify-manifest.mjs"
+  },
+  "dependencies": {
+    "marked": "^18.0.13"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^5.0.1",
+    "jsdom": "^30.0.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  }
+}

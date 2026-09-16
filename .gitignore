@@ -1,0 +1,16 @@
+# Installed dependencies and build output. Neither is reviewable and both are
+# reproducible from `package.json` and `package-lock.json`.
+node_modules/
+dist/
+
+# Vercel's local state, which `.vercel/` writes when a deployment is linked from a
+# checkout. It names a project and a team; neither belongs in the repository, and the
+# deployment itself is reproducible from the committed configuration.
+.vercel/
+
+# Coverage output.
+coverage/
+
+# Editor and OS noise.
+.DS_Store
+*.log
